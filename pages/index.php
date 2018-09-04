@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<?php 
+	include("include/link.php");
+	session_start();
+?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>FSMS</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../css/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../css/startmin.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Please Sign In</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" action = "" method = "POST">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Username" name="usr" type="text" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Password" name="pass" type="password" value="" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                           <a href = "">Recover Password?</a>
+										</label>
+                                    </div>
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <button class="btn btn-lg btn-success btn-block" type = "submit" name = "submit">Login</button>
+													<?php 
+			if (isset($_POST['submit'])){
+				$_usr = mysqli_real_escape_string($link,$_POST['usr']);
+				$_pass = mysqli_real_escape_string($link,$_POST['pass']);
+				
+				$sql = "SELECT * FROM user_accounts WHERE user_name = '".$_usr."' AND pass_word = '".$_pass."'";
+				$result = mysqli_query($link,$sql);
+				$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+				$count = mysqli_num_rows($result);
+
+				// If result matched $myusername and $mypassword, table row must be 1 row
+				if($count == 1) {
+					$_SESSION['id'] = $row['user_id'];
+					$_SESSION['usr'] = $_usr;
+					$_SESSION['pass'] = $_pass;
+					
+					header("Location:main.php");
+					
+				}else{
+					echo "<div style='background-color: #FFD2D2;' >
+					<button class='close' data-dismiss='alert'>&times;</button>
+					<strong>Error!</strong> Incorrect username or password.
+				</div>";
+				}
+				
+				
+				
+			}
+	  
+	  
+		?>
+                                </fieldset>
+                            </form>
+			
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script src="../js/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../js/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../js/startmin.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,10 @@
+Read me.....
+Username Admin
+Password test
+
+1. You must installed and start xammp apache and mysql web server.
+2. Copy Fuel Station into htdoc on xammp file
+3. Import station_db.sql into your mysql database
+4. Open your browser and paste "http://localhost/fuel station/pages/index.php" on your URL
+5. Login by using above username and password
+6. You can continue to navigate but it still in developing.
